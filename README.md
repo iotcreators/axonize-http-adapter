@@ -11,5 +11,6 @@ To start the HTTP server change into the root directory axonize-http-adapter and
 To add a new messages decoder to the adapter perform the following steps
 - Create a Python file in the directory axonize-http-adapter/decoders.
 - Add the function "def decode(type, data)" to the Python file.
+- If your decoder introduces new metrics declar them in the file IoTCrMetrics and extend the Axonize mapping in the file applications/Axonize.py.
 - Register your decoder in the configuration file "CONFIG.py" with a symbolic name.
 
