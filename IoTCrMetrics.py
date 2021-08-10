@@ -8,10 +8,17 @@ MN_LIGHT_LUX           = "Light LUX"           # Lux
 MN_MOTION_COUNT        = "Motion Count" 
 MN_CO2                 = "CO2"                 # ppm
 MN_BATTERY_V           = "BatteryV"            # V
+
 MN_OCCUPANCY           = "Occupancy"           # 0:=not occupied, 1:=occupied
+MV_NOT_OCCUPIED        = 0
+MV_OCCUPIED            = 1
+
 MN_OPEN_COUNT          = "Open Count" 
 MN_CLOSE_COUNT         = "Close Count" 
+
 MN_OPEN_CLOSE          = "OpenClose"           # 0:=closed, 1:=open
+MV_CLOSE               = 0
+MV_OPEN                = 1
 
 # Introduced with NKE watteco smart plug
 MN_ACTIVE_ENERGY       = "ActiveEnergy"        # W h

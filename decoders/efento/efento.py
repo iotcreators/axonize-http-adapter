@@ -45,13 +45,15 @@ def decode(type, data):
             d["DifferentialPressure"] = e["startPoint"]
 
         elif e["type"] == "MEASUREMENT_TYPE_OK_ALARM":
-            
-            '''
+                       '''
             type          = MEASUREMENT_TYPE_OK_ALARM
             timestamp     = 1628585145
             sampleOffsets = [-1, 6, 81]
             '''
-            d["OkAlarm"] = e["sampleOffsets"][0]
+            if e["sampleOffsets"][0] < 0:
+                d[MN_OPEN_CLOSE] = MV_CLOSE
+            else:
+                d[MN_OPEN_CLOSE] = MV_OPEN
 
         elif e["type"] == "MEASUREMENT_TYPE_IAQ":
             d["IndoorAirQuality"] = e["startPoint"]
