@@ -4,6 +4,9 @@ from IoTCrMetrics import *
 import decoders.efento.proto_measurements_pb2 as proto_measurements_pb2
 from google.protobuf.json_format import MessageToDict
 
+import logging
+log = logging.getLogger(__name__)
+
 def decode(type, data):
 
     # In case the function is called testwise, return None
@@ -17,10 +20,18 @@ def decode(type, data):
     if "channels" not in d1.keys():
         return None
 
+    channelIdx = 0
+
     for e in d1["channels"]:
         if "type" not  in e.keys():
             continue
-        
+
+        # Log channel data
+        for k in e.keys():
+            log.info("Channel[%d][%s] = %s" % (channelIdx, k, str(e[k])))
+        log.info("")
+        channelIdx = channelIdx + 1 
+
         if e["type"] == "MEASUREMENT_TYPE_TEMPERATURE":
             d[MN_TEMPERATURE] = e["startPoint"] / 10.
 
@@ -34,7 +45,13 @@ def decode(type, data):
             d["DifferentialPressure"] = e["startPoint"]
 
         elif e["type"] == "MEASUREMENT_TYPE_OK_ALARM":
-            d["OkAlarm"] = e["startPoint"]
+            
+            '''
+            type          = MEASUREMENT_TYPE_OK_ALARM
+            timestamp     = 1628585145
+            sampleOffsets = [-1, 6, 81]
+            '''
+            d["OkAlarm"] = e["sampleOffsets"][0]
 
         elif e["type"] == "MEASUREMENT_TYPE_IAQ":
             d["IndoorAirQuality"] = e["startPoint"]
