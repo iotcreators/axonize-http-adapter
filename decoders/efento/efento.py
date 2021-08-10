@@ -45,7 +45,7 @@ def decode(type, data):
             d["DifferentialPressure"] = e["startPoint"]
 
         elif e["type"] == "MEASUREMENT_TYPE_OK_ALARM":
-                       '''
+            '''
             type          = MEASUREMENT_TYPE_OK_ALARM
             timestamp     = 1628585145
             sampleOffsets = [-1, 6, 81]
