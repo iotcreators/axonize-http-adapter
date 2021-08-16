@@ -8,8 +8,9 @@ from datetime import datetime
 from http.server import BaseHTTPRequestHandler
 import logging
 
-import IoTDecoders as decoders
-import IoTApplication as application
+from IoTDecoders import IoTDecoders as decoders
+from IoTApplication import IoTApplication as appl
+from NiAuthorizations import NiAuthorizations as auths
 
 log = logging.getLogger(__name__)
 
@@ -82,7 +83,25 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
             log.info("%s:%s" % (k, header[k]))
         log.info("~~~")
 
-        # Get the optional header fields
+        # Verify the authorization 
+        # Expect an auth string of the form "<impact-tenant-name>:<username>:<password>" 
+        # and verifies if it has been already successfully verified.
+
+        if "authorization" not in header.keys():
+            raise Exception("No Authorization header field defined.")
+
+        a = splitString(header["authorization"], ":")
+
+        if len(a) != 3:
+            raise Exception("Authorization string has not valid format. Should be <tenantName>:<username>:<password>")
+
+        if auths.requiresAuth(a[0], a[1]):
+            log.info("... Authorizing %s:%s ..." % (a[0], a[1]))
+            auths.doAuth(a[0], a[1], a[2])     
+        else:
+            log.info("%s:%s already authorized." % (a[0], a[1]))
+
+        # Extract the optional header fields
         iotcrDefaultDecoder = None
 
         if HEADER_NAME_DEFAULT_DECODER in header.keys():
@@ -128,9 +147,6 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
         dBody = json.loads(sBody)
       
         # Get the application connection from the http header fields and the message
-
-        appl = application.getApplication()
-
         applConn = appl.getConnectionFromHTTP(header, dBody)
 
         # Process all reports
@@ -167,10 +183,7 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
 
             ###
             # Call the decoder 
-
-            decoder = decoders.getDecoders()
-
-            decodedValues = decoder.decode(decoderKey, None, report["value"])
+            decodedValues = decoders.decode(decoderKey, None, report["value"])
 
             if not decodedValues:
                 log.error("No decoded values available.")

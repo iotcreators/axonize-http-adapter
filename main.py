@@ -9,8 +9,9 @@ import logging
 import utils
 
 from HttpServer import HttpServer
-import IoTDecoders as decoders
-import IoTApplication as application
+from IoTDecoders import IoTDecoders as decoders
+from IoTApplication import IoTApplication as application
+from NiAuthorizations import NiAuthorizations as auths
 
 log = logging.getLogger(__name__)
 
@@ -46,6 +47,9 @@ if __name__ == '__main__':
 
         # Initialize the decoder
         decoders.init(CFG.DecoderCfg)
+
+        # Initialize the authorizations
+        auths.init(CFG.ScsAuthorizationsCfg)
 
         # Start the http server
         httpServer = HttpServer(CFG.ServiceName, CFG.HttpServerCfg["port"], CFG.HttpServerCfg)

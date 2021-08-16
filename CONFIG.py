@@ -12,6 +12,12 @@ HttpServerCfg = {
     "port" : 8080
 }
 
+ScsAuthorizationsCfg = {
+    "niApiHost": "api.scs.iot.telekom.com",    # URL of the Nokia Impact API
+	"niApiPort": 443,                          # port of the Nokia Impact API
+    "authValidSecs" : 60 * 30                  # Seconds an authorization stays valid before re-newal
+}
+
 ApplicationCfg = {
     "pyfile":"./applications/Axonize.py"
 }

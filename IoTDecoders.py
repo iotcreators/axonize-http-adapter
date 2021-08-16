@@ -3,20 +3,13 @@ import logging
 
 log = logging.getLogger(__name__)
 
-global _DECODERS
-_DECODERS = None
-
-def init(cfg):
-    global _DECODERS
-    _DECODERS = _IoTDecoders(cfg)
-
-def getDecoders():
-    global _DECODERS
-    return _DECODERS
-
 class _IoTDecoders():
+
+    def __init__(self):
+        self._cfg = None
+        self._decoders = None
     
-    def __init__(self, cfg):
+    def init(self, cfg):
         self._cfg = cfg
         self._decoders = cfg["decoders"]
 
@@ -42,3 +35,6 @@ class _IoTDecoders():
         # Get the  decoder and call it
         module = self._cfg["decoders"][key]["pymodule"]
         return module.decode(type, data)
+
+# Public singelton instance
+IoTDecoders = _IoTDecoders()

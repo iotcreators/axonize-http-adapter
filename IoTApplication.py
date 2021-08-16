@@ -3,20 +3,13 @@ import logging
 
 log = logging.getLogger(__name__)
 
-global _APPL
-_APPL = None
-
-def init(cfg):
-    global _APPL
-    _APPL = _IoTApplication(cfg)
-
-def getApplication():
-    global _APPL
-    return _APPL
-
 class _IoTApplication():
 
-    def __init__(self, cfg):
+    def __init__(self):
+        self._cfg = None
+        self._appl = None
+
+    def init(self, cfg):
         self._cfg = cfg
         self._appl = None
 
@@ -46,3 +39,6 @@ class _IoTApplication():
         Sends the message to the application
         '''
         return self._appl.sendMsg2Appl(conn, applMsg)
+
+# Public singelton instance 
+IoTApplication = _IoTApplication()

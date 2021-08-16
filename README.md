@@ -7,6 +7,9 @@ The HTTP adapter implements the following main functions
 # How to start the HTTP server
 To start the HTTP server change into the root directory axonize-http-adapter and execute the script main.py.
 
+# How to register axonize-http-adapter as application URL in IoT Creators portal
+Within your project in the IoT Creators portal define the URL of your axonize-http-adapter web services as CALLBACK URL.
+
 # How to add sensor decodings
 To add a new messages decoder to the adapter perform the following steps
 - Create a Python file in the directory axonize-http-adapter/decoders.
@@ -14,3 +17,9 @@ To add a new messages decoder to the adapter perform the following steps
 - If your decoder introduces new metrics declar them in the file IoTCrMetrics and extend the Axonize mapping in the file applications/Axonize.py.
 - Register your decoder in the configuration file "CONFIG.py" with a symbolic name.
 
+# Current integrated decodes
+## nke WATTECO Smart Plug
+sourc code see decoders/nkewatteco.
+Required python packages are:
+- pip3 install dicttoxml
+- pip3 install construct==2.8.12
