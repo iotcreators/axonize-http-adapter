@@ -8,7 +8,7 @@ The HTTP adapter implements the following main functions
 To start the HTTP server change into the root directory axonize-http-adapter and execute the script main.py.
 
 # How to register axonize-http-adapter as application URL in IoT Creators portal
-Within your project in the IoT Creators portal define the URL of your axonize-http-adapter web services as CALLBACK URL.
+Within your project in IoT Creators portal define the URL of your axonize-http-adapter web server as CALLBACK URL and configure the following header fields.
 
 # How to add sensor decodings
 To add a new messages decoder to the adapter perform the following steps
