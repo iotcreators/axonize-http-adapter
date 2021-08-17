@@ -17,7 +17,14 @@ To start the HTTP server change into the root directory `axonize-http-adapter` a
 ###
 # How to register axonize-http-adapter to IoT Creators
 Within your project in IoT Creators portal define the URL of your `axonize-http-adapter` web server as **CALLBACK URL** and configure the following header fields.
-
+###
+```
+axo-gateway-device-id: 60feea857871148540f6f
+axo-gateway-sas-token: SharedAccessSignature sr=stg-ottokar.azure-devices.net%2Fdevices%2F60feea857876a71148540f6f&sig=ck6iv9dAZdUhEVjY4ZJ8wn2ZcYc54%3D&se=1654001125
+axo-gateway-app-id: f74b005a-cda3-ac52-acbe-2fdb27aceac
+Authorization: CON_0000048455:API_CON_0000048455_564442:XnHXa1+B+37hhs9o53.566
+```
+###
 #### Authorization
 Authorization token of the IoT Creators project to which you assign `axonize-http-adapter` as **CALLBACK URL**. 
 The format of the Authorization header field is:
