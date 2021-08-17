@@ -24,6 +24,30 @@ The format of the Authorization header field is:
 ```
 Authorization: <GROUP_NAME>:<API USERNAME>:<API USER PASSWORD>
 ```
+###
+### axo-iothub-url
+Azure IoT Hub url of your Axonize tenant. Before you enabled the **Developer Mode** of your product template **IoT Creators Gateway** you can find IoT Hub url in the connect string of your previously created "IoT Creator Gateway" device in Axonize.
+```
+axo-iothub-url: stg-ottokar.azure-devices.net
+```
+###
+### axo-gateway-device-id
+Device id of your "IoT Creators Gateway" device. Before you enabled the **Developer Mode** of your product template **IoT Creators Gateway** you can find deviceId of your previously created "IoT Creator Gateway" device in Axonize.
+```
+axo-gateway-device-id: 60feea857876a711bac40f6f
+```
+###
+### axo-gateway-app-id
+App id of your "IoT Creators Gateway" device. Before you enabled the **Developer Mode** of your product template **IoT Creators Gateway** you can find the appId of your previously created "IoT Creator Gateway" device in Axonize.
+```
+axo-gateway-app-id: f74b005a-baa3-4c52-ac7e-1afdb27aceac
+```
+###
+### axo-gateway-sas-token
+SAS token of your "IoT Creators Gateway" device. Before you enabled the **Developer Mode** of your product template **IoT Creators Gateway** you can find and create the SAS token for your previously created "IoT Creator Gateway" device in Axonize.
+```
+axo-gateway-sas-token: SharedAccessSignature sr=stg-ottokar.azure-devices.net%2Fdevices%2F60feea857876a71148540&sig=ck6iv9dAZbkfg2eL2SWQjIhEVjY4ZJ8wn2ZcYc54%3D&se=1654001125
+```
 
 ###
 # How to add sensor decodings
