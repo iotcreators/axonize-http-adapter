@@ -7,9 +7,9 @@ The HTTP adapter implements the following main functions
 ###
 # Prepare Axonize to integrate with IoT Creators
 Perform the following steps to prepare Axonize to integrate with IoT Creators via `axonize-http-adapter`:
-1. In your Axonize tenant create a new product template with the name "IoT Creators Gateway". Enable "Developer Mode" in the product template. Beside this you don't need to configure more.
-2. In your Axonize tenant create a new device of product type "IoT Creators Gateway" with a name of your choice. 
-3. In your new created device of type "IoT Creators Gateway" generate a SAS token which you will use to forward messages from `axonize-http-adapter` to Axonize.
+1. In your Axonize tenant create a new product template with the name **IoT Creators Gateway**. Enable **Developer Mode** in the product template. Beside this you don't need to configure more.
+2. In your Axonize tenant create a new device of product type **IoT Creators Gateway** with a name of your choice. 
+3. In your new created device of type "IoT Creators Gateway" generate a **SAS token** which you will use to forward messages from `axonize-http-adapter` to Axonize.
 ###
 # How to start the HTTP server
 To start the HTTP server change into the root directory `axonize-http-adapter` and execute the script `main.py`.
