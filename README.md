@@ -12,7 +12,7 @@ To start the HTTP server change into the root directory `axonize-http-adapter` a
 # How to register axonize-http-adapter as application URL in IoT Creators portal
 Within your project in IoT Creators portal define the URL of your `axonize-http-adapter` web server as **CALLBACK URL** and configure the following header fields.
 
-###**Authorization**
+###Authorization
 Authorization token of the IoT Creators project to which you assign `axonize-http-adapter` as **CALLBACK URL**. 
 The format of the Authorization header field is:
 ```
