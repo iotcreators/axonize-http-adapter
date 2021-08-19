@@ -1,9 +1,6 @@
-# axonize-http-adapter
-Axonize HTTP adapter for IoT Creators (iotcrators.com) is a simple HTTP server which URL can be registered as application URL in the projects of the IoT Creators portal.
-The HTTP adapter implements the following main functions
-- Decode device specific sensor data into the Axonize format.
-- Forward the decoded messages to your Axonize tenant.
-
+# axonize-http-adapter for IoT Creators
+Axonize HTTP adapter for IoT Creators (iotcrators.com) is a simple HTTP server which URL can be registered as application URL in the projects of the IoT Creators portal. It receives the device messages from IoT Creators middleware, decodes the messages from the devices specific into Axonize format and ingests it into Axonize.
+###
 ###
 # Prepare Axonize to integrate with IoT Creators
 Perform the following steps to prepare Axonize to integrate with IoT Creators via `axonize-http-adapter`:
@@ -11,9 +8,10 @@ Perform the following steps to prepare Axonize to integrate with IoT Creators vi
 2. In your Axonize tenant create a new device of product type **IoT Creators Gateway** with a name of your choice. 
 3. In your new created device of type "IoT Creators Gateway" generate a **SAS token** which you will use to forward messages from `axonize-http-adapter` to Axonize.
 ###
+###
 # How to start the HTTP server
 To start the HTTP server change into the root directory `axonize-http-adapter` and execute the script `main.py`.
-
+###
 ###
 # How to register axonize-http-adapter to IoT Creators
 Within your project in IoT Creators portal define the URL of your `axonize-http-adapter` web server as **CALLBACK URL** and configure the following header fields.
@@ -57,36 +55,24 @@ SAS token of your "IoT Creators Gateway" device. Before you enabled the **Develo
 ```
 axo-gateway-sas-token: SharedAccessSignature sr=stg-ottokar.azure-devices.net%2Fdevices%2F60feea857876a71148540&sig=ck6iv9dAZbkfg2eL2SWQjIhEVjY4ZJ8wn2ZcYc54%3D&se=1654001125
 ```
-
 ###
-# How to add sensor decodings
-To add a new messages decoder to the adapter perform the following steps
+###
+# How to add a new message decoder 
+To add a new message decoder to the adapter perform the following steps
 1. Create a Python file in the directory axonize-http-adapter/decoders.
 2. Add the function "def decode(type, data)" to the Python file.
-3. If your decoder introduces new metrics declar them in the file IoTCrMetrics and extend the Axonize mapping in the file applications/Axonize.py.
+3. If your decoder introduces new metrics declar them in the file IoTCrMetrics and extend the Axonize mapping in the file applications/axonize/MetricsMapping.py.
 - Register your decoder in the configuration file "CONFIG.py" with a symbolic name.
-
+4. Let the message use the decode by defining '"customAttributes":{"deviceType":"<MY DECODER NAME>"}' while you create the device via the API of IoT Creators.
 ###
-# Infos to current integrated sensor decoders
 ###
-## Efento CoAP NB-IoT sensors
-See `decoders/efento/efento.py`.
-###
-## Elsys LoRaWAN sensors
-See `decoders/elsys.py`.
-###
-## IMBUILDING NB-IoT sensors
-See `decoders/imbuilding.py`.
-###
-## TekTelic LoRaWAN sensors
-See `decoders/tektelic.py`.
-###
-## nke WATTECO LoRaWAN Smart Plug
-See `decoders/nkewatteco/nkewatteco.py`.
-To install required python packages perform:
-```
-pip3 install dicttoxml
-pip3 install construct==2.8.12
-```
-
+# Current message decoders
+Device | Decoder | Comment
+-------|---------|---------
+Efento CoAP NB-IOT sensors | `decoders/efento/efento.py` |
+Elsys LoRaWAN sensors | `decoders/elsys.py` |
+IMBUILDING NB-IoT CO2 sensor | `decoders/imbuilding.py` |
+TekTelic LoRaWAN Home sensors | `decoders/tektelic.py`|
+nke WATTECO LoRaWAN Smart Plug | `decoders/nkewatteco/nkewatteco.py` | ```pip3 install dicttoxml
+  pip3 install construct==2.8.12```
 

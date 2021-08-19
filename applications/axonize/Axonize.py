@@ -3,7 +3,8 @@ import json
 from datetime import datetime
 import time
 import logging
-from IoTCrMetrics import *
+
+from applications.axonize.MetricsMapping import *
 
 log = logging.getLogger(__name__)
 
@@ -12,33 +13,6 @@ CFG_AXO_IOTHUBURL   = "axo-iothub-url"
 CFG_AXO_GWDEVID     = "axo-gateway-device-id"
 CFG_AXO_GWDEVSASTOK = "axo-gateway-sas-token"
 CFG_AXO_APPID       = "axo-gateway-app-id"
-
-IOTCR_2_AXONIZE_MAP = {
-    MN_DATA            : ["Data", 43],
-    MN_TEMPERATURE     : ["Temperature", 7],
-    MN_HUMIDITY        : ["Humidity", 8],
-    MN_ACCELERATION    : ["Acceleration", 9],
-    MN_LIGHT_LUX       : ["Light LUX", 1069],
-    MN_MOTION_COUNT    : ["Motion Counter", 997],
-    MN_CO2             : ["CO2", 1008],
-    MN_BATTERY_V       : ["Battery Volt", 5],
-    MN_OCCUPANCY       : ["Occupancy", 998],
-    MN_OPEN_COUNT      : ["Open Count", 996],
-    MN_CLOSE_COUNT     : ["Close Count", 996],
-    MN_OPEN_CLOSE      : ["Open Close", 1022],
-    MN_ACTIVE_ENERGY   : ["ActiveEnergy", 15],
-    MN_REACTIVE_ENERGY : ["ReactiveEnergy", 15],    
-    MN_ACTIVE_POWER    : ["ActivePower", 15],
-    MN_REACTIVE_POWER  : ["ReactivePower", 15],
-    MN_COUNTER_A       : ["Count A", 1083],
-    MN_COUNTER_B       : ["Count B", 1083],
-    MN_RSSI_LEVEL      : ["RSSI Level", 1057],
-    MN_PRESENCE        : ["Presence", 1026]
-}
-
-#('Batterypercentage', 5, batteryLevel));
-#('Differential Open Count', 996, rawValue));
-#('Differential Close Count', 996, rawValue));
 
 def getConnectionFromHTTP(httpHeaders, httpBody):
     conn = {}

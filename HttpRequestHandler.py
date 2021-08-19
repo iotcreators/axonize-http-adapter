@@ -14,8 +14,6 @@ from NiAuthorizations import NiAuthorizations as auths
 
 log = logging.getLogger(__name__)
 
-HEADER_NAME_DEFAULT_DECODER = "iotcr-default-decoder"
-
 def splitString(str, sepChar):
     a = []
     for s in str.split(sepChar):
@@ -101,15 +99,6 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
         else:
             log.info("%s:%s already authorized." % (a[0], a[1]))
 
-        # Extract the optional header fields
-        iotcrDefaultDecoder = None
-
-        if HEADER_NAME_DEFAULT_DECODER in header.keys():
-            iotcrDefaultDecoder = header[HEADER_NAME_DEFAULT_DECODER].strip()
-
-        if iotcrDefaultDecoder and len(iotcrDefaultDecoder) == 0:
-            iotcrDefaultDecoder = None
-
         # Get the body and verify it
         
         content_len = int(header["content-length"]) if "content-length" in header.keys() else 0
@@ -174,15 +163,9 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
             if "customAttributes" in report.keys() and "deviceType" in report["customAttributes"]:
                 decoderKey = report["customAttributes"]["deviceType"].lower()
 
-            if not decoderKey and iotcrDefaultDecoder:
-                decoderKey = iotcrDefaultDecoder.lower()
-
-            if not decoderKey:
-                log.error("No decoder found. Doing nothing.")
-                continue
 
             ###
-            # Call the decoder 
+            # Call the decoder. If the key is not set or unknown the default decoder is called internally.
             decodedValues = decoders.decode(decoderKey, None, report["value"])
 
             if not decodedValues:

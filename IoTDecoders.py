@@ -28,12 +28,30 @@ class _IoTDecoders():
 
             d["pymodule"] = module
 
-    def decode(self, key, type, data):
-        if key not in self._cfg["decoders"].keys():
-            raise Exception("No decoder for >%s< available." % (key))
+        log.info("Loading default decoder ...")
+        spec = importlib.util.spec_from_file_location("defaultDecoder", cfg["defaultDecoder"]["pyfile"])
+        module = importlib.util.module_from_spec(spec)
+        spec = spec.loader.exec_module(module)
 
-        # Get the  decoder and call it
-        module = self._cfg["decoders"][key]["pymodule"]
+        log.info("  testing decoder ...")
+        module.decode(None, None)
+
+        cfg["defaultDecoder"]["pymodule"] = module
+
+    def decode(self, key, type, data):
+
+        if not key:
+            log.warn("No decoder defined in messages. Using default decoder.")
+            module = self._cfg["defaultDecoder"]["pymodule"]
+
+        elif key not in self._cfg["decoders"].keys():
+            log.warn("unknown deocder %s. Using default decoder ...")
+            module = self._cfg["defaultDecoder"]["pymodule"]
+
+        else:
+            # Get the  decoder and call it
+            module = self._cfg["decoders"][key]["pymodule"]
+        
         return module.decode(type, data)
 
 # Public singelton instance

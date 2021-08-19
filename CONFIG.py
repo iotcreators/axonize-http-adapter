@@ -19,10 +19,11 @@ ScsAuthorizationsCfg = {
 }
 
 ApplicationCfg = {
-    "pyfile":"./applications/Axonize.py"
+    "pyfile":"./applications/axonize/Axonize.py"
 }
 
 DecoderCfg = {
+    "defaultDecoder" : {"pyfile":"./decoders/default.py"},
     "decoders" : {
         "elsys ers co2"      : {"pyfile":"./decoders/elsys.py"},
         "efento"             : {"pyfile":"./decoders/efento/efento.py"},
