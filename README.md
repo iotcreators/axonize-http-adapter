@@ -73,6 +73,5 @@ Efento CoAP NB-IOT sensors | `decoders/efento/efento.py` |
 Elsys LoRaWAN sensors | `decoders/elsys.py` |
 IMBUILDING NB-IoT CO2 sensor | `decoders/imbuilding.py` |
 TekTelic LoRaWAN Home sensors | `decoders/tektelic.py`|
-nke WATTECO LoRaWAN Smart Plug | `decoders/nkewatteco/nkewatteco.py` | ```pip3 install dicttoxml
-  pip3 install construct==2.8.12```
+nke WATTECO LoRaWAN Smart Plug | `decoders/nkewatteco/nkewatteco.py` | `pip3 install dicttoxml construct==2.8.12`
 
