@@ -14,6 +14,9 @@ CFG_AXO_GWDEVID     = "axo-gateway-device-id"
 CFG_AXO_GWDEVSASTOK = "axo-gateway-sas-token"
 CFG_AXO_APPID       = "axo-gateway-app-id"
 
+def init(cfg):
+    pass
+
 def getConnectionFromHTTP(httpHeaders, httpBody):
     conn = {}
 

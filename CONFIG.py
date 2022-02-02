@@ -29,7 +29,8 @@ DecoderCfg = {
         "efento"             : {"pyfile":"./decoders/efento/efento.py"},
         "tektelic smartroom" : {"pyfile":"./decoders/tektelic.py"},
         "nke smartplug"      : {"pyfile":"./decoders/nkewatteco/nkewatteco.py"},
-        "imbuilding co2"     : {"pyfile":"./decoders/imbuilding.py"}
+        "imbuilding co2"     : {"pyfile":"./decoders/imbuilding.py"},
+        "miromico click"     : {"pyfile":"./decoders/miromico.py"}
     }
 }
 

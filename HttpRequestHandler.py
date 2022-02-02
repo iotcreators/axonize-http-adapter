@@ -5,7 +5,6 @@ import time
 import json
 import requests
 from datetime import datetime
-from http.server import BaseHTTPRequestHandler
 import logging
 
 from IoTDecoders import IoTDecoders as decoders
@@ -20,61 +19,9 @@ def splitString(str, sepChar):
         a.append(s.strip())
     return a
 
-def parseHttpHeader(s):
-    d = {}
-    for line in splitString(s.strip(), "\n"):
-        idx = line.find(":")
-        if idx > -1:
-            key = line[0:idx].strip().lower()
-            val = line[idx+1:].strip()
-            d[key] = val
+class _HttpRequestHandler():
 
-    return d
-
-global REQUEST_COUNT
-REQUEST_COUNT = 0
-
-class HttpRequestHandler(BaseHTTPRequestHandler):
-
-    def returnWithError(self, statusCode, message):
-        self.send_response(statusCode)
-        self.send_header('Content-type', "application/json")
-        self.end_headers()
-
-        s = json.dumps({"message":message})
-        log.error("Returning with error: %d %s" % (statusCode, s))
-
-        self.wfile.write(s.encode("utf8"))
-        log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
-    def returnOk(self):
-        self.send_response(200)
-        self.send_header('Content-type', "application/json")
-        self.end_headers()
-        log.info("Returning with ok: %d" % (200))
-        log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        return
-
-    def do_POST(self):
-
-        try:        
-            self.do_POST_Ex()
-
-        except Exception as ex:
-            traceback.print_exc()           
-            self.returnWithError(500, "Caught exception: %s" % (str(ex)))
-
-    def do_POST_Ex(self):
-        log.info("###########################################################################")
-
-        # Incr and print request counter
-        global REQUEST_COUNT
-        REQUEST_COUNT = REQUEST_COUNT + 1
-        log.info("Request count: %d" % (REQUEST_COUNT))
-        log.info("~~~")
-
-        # Parse the header fields
-        header = parseHttpHeader(str(self.headers))
+    def doHandle(self, header, sBody):
 
         log.info("*** Header:")                
         for k in header.keys():
@@ -99,11 +46,7 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
         else:
             log.info("%s:%s already authorized." % (a[0], a[1]))
 
-        # Get the body and verify it
-        
-        content_len = int(header["content-length"]) if "content-length" in header.keys() else 0
-        sBody = self.rfile.read(content_len).decode("utf8") if content_len > 0 else ""
-        sBody = sBody.strip()
+        # Verify the body
 
         log.info("*** Body:")
         log.info(str(sBody))
@@ -111,7 +54,7 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
         
         if len(sBody) == 0:
             log.info("Body is empty.")
-            return self.returnOk()
+            return (200, None)
 
         '''
         {
@@ -142,7 +85,7 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
 
         if "reports" not in dBody.keys() or len(dBody["reports"]) == 0:
             log.info("No reports in body.")
-            return self.returnOk()
+            return (200, "No reports in body.")
 
         # Process each report
         n = 0
@@ -162,7 +105,6 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
             decoderKey = None
             if "customAttributes" in report.keys() and "deviceType" in report["customAttributes"]:
                 decoderKey = report["customAttributes"]["deviceType"].lower()
-
 
             ###
             # Call the decoder. If the key is not set or unknown the default decoder is called internally.
@@ -186,6 +128,10 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
             # Send the message to application
             appl.sendMsg2Appl(applConn, applMsg)
 
-        return self.returnOk()    
+        return (200, None)
+
+
+# Public singelton instance 
+HttpRequestHandler = _HttpRequestHandler()
 
 

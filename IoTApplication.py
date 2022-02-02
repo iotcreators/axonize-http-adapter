@@ -20,6 +20,9 @@ class _IoTApplication():
         self._appl = importlib.util.module_from_spec(spec)
         spec = spec.loader.exec_module(self._appl)
 
+        # Initialize the application
+        self._appl.init(cfg)
+
     def getConnectionFromHTTP(self, httpHeaders, httpBody):
         '''
         Builds the connection object to the application from the passed

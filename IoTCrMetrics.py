@@ -34,4 +34,15 @@ MN_COUNTER_A           = "CounterA"
 MN_COUNTER_B           = "CounterB"
 MN_RSSI_LEVEL          = "RsiiLevel"
 
-        
+# Introduced with MiroMico Click button
+MN_FIRST_CLICK = "First_Click"         
+MN_NORTH_CLICK = "North_Click"
+MN_EAST_CLICK  = "East_Click"
+MN_SOUTH_CLICK = "South_Click"
+MN_WEST_CLICK  = "West_Click"
+
+MV_NORTH       = "North"
+MV_EAST        = "East"
+MV_SOUTH       = "South"
+MV_WEST        = "West"
+
