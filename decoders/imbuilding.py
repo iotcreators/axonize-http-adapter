@@ -35,6 +35,22 @@ def decode(deviceType, data):
             MN_COUNTER_B     : int.from_bytes(a[14:16], "big")
         }
 
+        elif type == 2 and version == 6:
+
+            d = {
+                "deviceType"  : "IMBUILDING.OverdoorPeopleCount",
+                "DeviceStatus": a[10],
+                "SensorStatus": a[17],
+                "TotalCounterA" : int.from_bytes(a[18:20], "big"),
+                "TotalCounterB" : int.from_bytes(a[20:22], "big")
+            }
+
+            c = int.from_bytes(a[13:15], "big")
+            if c > 0:
+                d["CounterA"] = c
+            c = int.from_bytes(a[15:17], "big")
+            if c > 0:
+                d["CounterB"] = c
     else:
         log.warn("Unsupported type %d and version %d" % (type, version))
 
